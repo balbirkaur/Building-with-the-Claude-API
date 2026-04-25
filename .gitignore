@@ -1,4 +1,5 @@
 .env
 .venv
 instruction.py
-client.py
+client.
+__pycache__/

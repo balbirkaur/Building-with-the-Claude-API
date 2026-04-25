@@ -1,21 +1,7 @@
+from common import client, add_user_message, add_assistant_message
 from dotenv import load_dotenv
 import os
-from anthropic import Anthropic
-
-load_dotenv(override=True)
-for var in ("ANTHROPIC_BASE_URL", "ANTHROPIC_AUTH_TOKEN", "ANTHROPIC_MODEL"):
-    if not os.getenv(var):
-        raise EnvironmentError(f"Missing required environment variable: {var}")
-client = Anthropic(
-    base_url=os.getenv("ANTHROPIC_BASE_URL"),
-    api_key=os.getenv("ANTHROPIC_AUTH_TOKEN"),
-)
-
-def add_user_message(messages, text):
-    messages.append({"role": "user", "content": text})
-
-def add_assistant_message(messages, text):
-    messages.append({"role": "assistant", "content": text})
+load_dotenv()
 
 def chat(messages):
     message = client.messages.create(
@@ -24,8 +10,6 @@ def chat(messages):
         messages=messages,
     )
     return message.content[0].text
-
-
 # --- Interactive chat loop ---
 messages = []
 while True:
